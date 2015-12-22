@@ -1,0 +1,1506 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CSDN搜索</title>
+		<link href="http://csdnimg.cn/public/common/libs/bootstrap/css/bootstrap.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/themes/default/css/common.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/static/css/pagination.css" rel="stylesheet">
+		<link href="http://c.csdnimg.cn/public/common/toolbar/css/index.css" rel="stylesheet" >
+		<link href="/so/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	    <link href="/so/css/bootstrap-responsive.css" rel="stylesheet">
+	    <link href="http://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+<!-- 	    自动补全 -->
+<!-- 	    <link type="text/css" rel="stylesheet" href="http://fed.csdn.net/static/css/main.css"> -->
+
+    	<link type="text/css" href="/so/css/main.css?1314" rel="stylesheet">
+    	
+<!--     	<script src="http://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script> -->
+		<script type="text/javascript" src="/so/js/jquery.js"></script>
+		<script type="text/javascript" src="/so/js/bootstrap.min.js"></script>
+		<script src="/so/js/jsonp.js" type="text/javascript"></script>
+		<script src="/so/js/ser_person.js" type="text/javascript"></script>
+
+
+		
+		
+		<script type="text/javascript">
+// 		$( function () {			
+// 			csdn.AutoSearch.run({
+// 				search: ".search-text2",
+// 				onSelect: function(data) {
+// 					alert(data.value);
+// 				}
+// 			})	
+// 		} );
+
+
+			function GetQueryString(name) {
+			   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+			   var r = window.location.search.substr(1).match(reg);
+			   if (r!=null) return unescape(r[2]); return null;
+			}
+			//var show_course = false;
+			
+			$(document).ready(function(){
+			    $("ul li").click(function(){
+			    	
+			    	var ili = $(".search-type")[0].children.length;
+					for (var i = 0; i < ili; i++) {
+						$(".search-type")[0].children[i].style.color="#000000";
+					}
+					
+			    	if (this.innerHTML == "资讯") {
+			    		$("#tt")[0].value = "news";
+			    		$("#tb")[0].value = "news";
+			    		
+			    		$(".search-type")[0].children[1].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="inline";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+ 			    		$("input[name='o1']").each(function() {
+ 				    		if($(this).val() == "null")
+ 				    		{
+ 				    			$(this).attr("checked",true)
+ 				    		}});
+// 			    		$("input[name='o1'][value='time'").attr("checked",true);
+			    		
+			    	} else if (this.innerHTML == "博文") {
+			    		$("#tt")[0].value = "blog";
+			    		$("#tb")[0].value = "blog";
+			    		
+			    		$(".search-type")[0].children[2].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "课程") {
+			    		$("#tt")[0].value = "course";
+			    		$("#tb")[0].value = "course";
+			    		
+			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "讨论") {
+			    		$("#tt")[0].value = "discuss";
+			    		$("#tb")[0].value = "discuss";
+			    		
+			    		$(".search-type")[0].children[3].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "代码") {
+			    		$("#tt")[0].value = "code";
+			    		$("#tb")[0].value = "code";
+			    		
+			    		$(".search-type")[0].children[4].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+// 			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "文档") {
+			    		$("#tt")[0].value = "doc";
+			    		$("#tb")[0].value = "doc";
+			    		
+			    		$(".search-type")[0].children[5].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = $("input[name='o3']:checked").val();
+			    		$("#sb")[0].value = $("input[name='o3']:checked").val();
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="inline";
+// 			    		$("#o_ask")[0].style.display="none";
+// 			    	} else if (this.innerHTML == "问答") {
+// 			    		$("#tt")[0].value = "ask_topic";
+// 			    		$("#tb")[0].value = "ask_topic";
+			    		
+// 			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = "";
+// 			    		$("#ob")[0].value = "";
+// 			    		$("#st")[0].value = $("input[name='o4']:checked").val();
+// 			    		$("#sb")[0].value = $("input[name='o4']:checked").val();
+			    		
+// 			    		$("#o_news")[0].style.display="none";
+// 			    		$("#o_disscus_code")[0].style.display="none";
+// 			    		$("#o_doc")[0].style.display="none";
+// // 			    		$("#o_ask")[0].style.display="inline";
+			    		
+			    	} else {
+			    		$("#tt")[0].value = "";
+			    		$("#tb")[0].value = "";
+			    		
+			    		$(".search-type")[0].children[0].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	}
+			    	document.search_form_1.submit();
+			    });
+			});
+			function changeOrder(value) {
+				$("#ot")[0].value = value;
+	    		$("#ob")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+			function changeDocOrder(value) {
+				$("#st")[0].value = value;
+	    		$("#sb")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+// 			function changeAskOrder(value) {
+// 				$("#st")[0].value = value;
+// 	    		$("#sb")[0].value = value;
+	    		
+// 	    		document.search_form_1.submit();
+// 			}
+			
+			
+		</script>
+		
+		<script language="JavaScript" type="text/JavaScript">
+		$(document).ready(function(){
+				var ili = $(".search-type")[0].children.length;
+				for (var i = 0; i < ili; i++) {
+					$(".search-type")[0].children[i].style.color="#000000";
+				}
+				var t = GetQueryString("t");
+				
+				if (t == "news") {
+					$(".search-type")[0].children[1].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="inline";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+			    	$("input[name='o1']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "blog") {
+					$(".search-type")[0].children[2].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "course") {
+					$(".search-type")[0].children[6].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "discuss") {
+					$(".search-type")[0].children[3].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="inline";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "code") {
+					$(".search-type")[0].children[4].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "doc") {
+					$(".search-type")[0].children[5].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="inline";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o3']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+// 				} else if (t == "ask_topic") {
+// 					$(".search-type")[0].children[6].style.color="#990000";
+					
+// 					$("#o_news")[0].style.display="none";
+// 		    		$("#o_disscus_code")[0].style.display="none";
+// 		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="inline";
+// 		    		$("input[name='o3']").each(function() {
+
+// 			    		{
+// 			    			$(this).attr("checked",true)
+// 			    		}});
+				} else {
+					$(".search-type")[0].children[0].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+		    		//$("#o_ask")[0].style.display="none";
+				}
+				
+// 				function soso( val ) {
+
+// 		    		document.search_form_1.submit();
+// 				}
+				
+// 				$( '.search-btn2' ).bind( 'click', function () {
+// 					var $this = $( this );
+// 					var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 					var val = $form.serialize();
+					
+// 					console.log( val );
+// 					//soso( val );
+// 				} );
+				
+// 				$( '.search-text2' ).bind( 'keydown', function ( et ) {
+// 					var evt = et || window.event;
+					
+// 					if ( evt.keyCode == 13 )
+// 					{
+// 						var $this = $( this );
+// 						var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 						var val = $form.serialize();
+// 						console.log( val );
+// 						//soso( val );
+// 					}
+// 				} );				
+			});
+// 			windows.onload = onload_handler;
+		</script>
+		<script type="text/javascript">
+		domReady(function(){
+
+		    var oT = getByClass(document,'search-text2')[0];
+		    var oT2 = getByClass(document,'search-text2')[1];    
+		    var oFormcon = getByClass(document,'search-from2');
+		    var oForm1 = oFormcon[0].children[0];
+		    var oForm2 = oFormcon[1].children[0];
+
+		    var pos1 = getPos(oForm1).top;
+		    var pos2 = getPos(oForm2).top;    
+
+		    var oUl = document.getElementById('search-suggest2');
+		    var oUl2 = document.getElementById('search-suggest3');
+		    oUl.style.top = pos1 + 32 + 'px';
+		    oUl2.style.top = pos2 + 32 + 'px';
+		    
+		    var url=document.domain;
+		    if (window.location.port != 80) {
+		    	url += ":" +window.location.port;
+		    }
+		    var URL = window.location.protocol +'//'+url+'/so/search/so/autocomplete.do';
+		    var aLi=oUl.children;
+		    var aLi2=oUl2.children;
+
+		    window.iNow=-1;
+		    window.iNow2=-1;
+		    oT.focus();    
+		    var oldValue='';
+		    var oldValue2='';
+
+		    oT.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl.style.display='none';
+		            }
+		            else
+		            {
+		                oUl.style.display='block';
+		                var data = eval('('+json.suggestions+')');  
+		            }
+		            oUl.innerHTML='';
+		            for(var i=0; i<data.length; i++)
+		            {
+		                var oLi=document.createElement('li');
+		                oLi.innerHTML=data[i].key;
+		                oUl.appendChild(oLi);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi[i].index=i;
+		            aLi[i].onmouseover=function(){
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            this.style.background='#ccc';            
+		            
+		            iNow=this.index;
+		           
+		            }
+		            
+		            aLi[i].onclick=function()
+		            {
+		            	 oT.value=aLi[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue=oT.value;
+		    }
+
+		    oT.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow++;
+		            
+		            if(iNow==aLi.length){
+		                iNow=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;
+		            }else{
+		                oT.value=oldValue;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow--;            
+		            if(iNow==-2){
+		                iNow=aLi.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;   
+		            }else{
+		                oT.value=oldValue;  
+		            }
+		            return false;   
+		        }   
+		    }
+
+
+		    oT2.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT2.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl2.style.display='none';
+		            }
+		            else
+		            {
+		                oUl2.style.display='block';
+		                var data2 = eval('('+json.suggestions+')');  
+		            }
+		            oUl2.innerHTML='';
+		            for(var i=0; i<data2.length; i++)
+		            {
+		                var oLi2=document.createElement('li');
+		                oLi2.innerHTML=data2[i].key;
+		                oUl2.appendChild(oLi2);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi2[i].index=i;
+		            aLi2[i].onmouseover=function(){
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            this.style.background='#ccc';
+		            iNow2=this.index;
+		            
+		            }
+		            
+		            aLi2[i].onclick=function()
+		            {
+		            	oT2.value=aLi2[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue2=oT2.value;
+		    }
+
+		    oT2.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow2++;
+		            
+		            if(iNow2==aLi2.length){
+		                iNow2=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;
+		            }else{
+		                oT2.value=oldValue2;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow2--;            
+		            if(iNow2==-2){
+		                iNow2=aLi2.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;   
+		            }else{
+		                oT2.value=oldValue2;  
+		            }
+		            return false;   
+		        }   
+		    }
+		    oT.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    oT2.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    document.onclick = function()
+		    {
+		        oUl.style.display='none';
+		        oUl2.style.display='none';
+		    }
+		
+		    
+// 		    var oSourcon = document.getElementById('source-list');
+// 			var oSource = oSourcon.children[1];
+// 			var sourceURL = 'http://192.168.5.91:8080/so/search/so/getQualityArticle.do';	
+// 			var keyword = GetRequest().q;
+// 			jsonp(sourceURL, {q: keyword}, function (json){
+		            
+// 					var data = eval('('+json.suggestions+')');
+		            
+// 					if(data.length==0)
+// 		            {
+// 		                oSourcon.style.display='none';
+// 		            }
+// 		            else
+// 		            {
+// 		               oSourcon.style.display='block';
+// 		                var data = eval('('+json.suggestions+')');				
+// 		            }
+					
+// 					for(var i=0; i<6; i++)
+// 		            {
+// 		                var oDl=document.createElement('dl');
+// 						var oDt=document.createElement('dt');
+// 						var oDd=document.createElement('dd');
+// 						var oImg=document.createElement('img');
+// 						var oA=document.createElement('a');
+// 						var oA2=document.createElement('a');
+						
+// 						oImg.src = data[i].pic;
+// 						oImg.width = 73;
+// 						oImg.height = 70;
+// 						oA.href = data[i].url;
+// 						oA.title = data[i].title;
+						
+// 						oA2.href = data[i].url;
+// 						oA2.title = data[i].title;
+// 						oA2.innerHTML = data[i].title;
+						
+// 						oA.appendChild(oImg);
+// 						oDt.appendChild(oA);
+// 						oDd.appendChild(oA2);
+// 						oDl.appendChild(oDt);
+// 						oDl.appendChild(oDd);
+// 						oSource.appendChild(oDl);
+// 		            }	
+					
+// 			}, 'callback');
+		});
+		
+		</script>
+
+	</head>
+	<body>
+
+		<script id="toolbar-tpl-scriptId"  prod="so" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" domain="http://so.csdn.net/so/" type="text/javascript"></script>
+		<div class="topadv">
+			<!--AdForward Begin:-->
+			<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|banner1&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+			<!--AdForward End-->
+		</div>
+		<div class="main-container">
+			<div class="con-l">
+		    <ul class="search-type">
+		    	<li>全部</li>    
+		        <li>资讯</li>   
+		        <li>博文</li>   
+		        <li>讨论</li>    
+		        <li>代码</li>    
+		        <li>文档</li>
+                <li>课程</li>
+<!-- 		        <li>问答</li> -->
+		    </ul>
+		    <div class="search-from2" style="position:relative">
+		    	<form id="search_form_1" name="search_form_1" >
+		        	<div class="search-text-con2">
+		        		<input type="text"  path="q" class="search-text2" id="q1" name="q" value="python"  autocomplete="off"/>
+		        		<input type="hidden" id="tt" name="t" value="blog" />
+		        		<input type="hidden" id="ot" name="o" value="null" />
+		        		<input type="hidden" id="st" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		        
+		        <div class="search-addition-con" >
+		        	<div id="o_news" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o1" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序</span>
+	 	             	<em><input type="radio" name="o1" value="time" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按时间排序 </span>
+			    	</div>
+			    	<div id="o_disscus_code" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o2" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序 </span>
+	 	             	<em><input type="radio" name="o2" value="reply" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按回复数排序</span>
+			    	</div>
+			    	<div id="o_doc" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o3" value="all" onchange="changeDocOrder(this.value);" onClick="this.blur();"  checked></em><span>全部</span>
+	 	             	<em><input type="radio" name="o3" value="doc" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>DOC</span>
+	 	             	<em><input type="radio" name="o3" value="ppt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PPT</span>
+	 	             	<em><input type="radio" name="o3" value="txt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>TXT</span>
+	 	             	<em><input type="radio" name="o3" value="pdf" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PDF</span>
+			    	</div>
+<!-- 			    	<div id="o_ask" style="display:none" class="search-addition"> -->
+<!-- 			    		<em><input type="radio" name="o4" value="1" onchange="changeAskOrder(this.value);" onClick="this.blur();"  checked></em><span>已解答</span> -->
+<!-- 	 	             	<em><input type="radio" name="o4" value="0" onchange="changeAskOrder(this.value);" onClick="this.blur();" ></em><span>未解答</span> -->
+<!-- 			    	</div> -->
+		        </div>
+		    </div>
+		    
+		    
+		    <div class="add-tag-con"  style="display:none">
+		    	
+		    	    
+		    </div>
+		    
+		    <div class="search-list-con" >
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/u014227871/article/details/25347105"  target="_blank">如何使用<em>python</em>脚本来创建cocos2d-x项目</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/u014227871"  target="_blank">u014227871</a>&nbsp;&nbsp;&nbsp;日期：2014-05-09 02:49:10&nbsp;&nbsp;&nbsp;浏览&nbsp;326&nbsp;次</dd>
+					        <dd class="search-detail">熟悉cocos2d-x的同学都</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/u014227871/article/details/25347105" target="_blank">http://blog.csdn.net/u014227871/article/details/25347105</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/esricd/article/details/8483918"  target="_blank">ArcGIS Server Administrator API 编写<em>python</em>脚本(一)</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/esricd"  target="_blank">esricd</a>&nbsp;&nbsp;&nbsp;日期：2013-01-09 08:51:20&nbsp;&nbsp;&nbsp;浏览&nbsp;1339&nbsp;次</dd>
+					        <dd class="search-detail">
+ArcGIS 10.1 for Server 包含一个 Administrator API，可用于为服务器的常用操作编写脚本。通过为服务器管理编写脚本，您可在计划的时间自动执行各种常用的任务。还可降低执行复杂或重复性任务时犯错误的可能性。
+通过 Administrator API，您可以调用 ArcGIS Server 所支持的各项管理任务。事实上，A</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/esricd/article/details/8483918" target="_blank">http://blog.csdn.net/esricd/article/details/8483918</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/rongc5/article/details/19032657"  target="_blank">c/c++ 调用<em>python</em> 脚本</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/rongc5"  target="_blank">rongc5</a>&nbsp;&nbsp;&nbsp;日期：2014-02-10 11:17:23&nbsp;&nbsp;&nbsp;浏览&nbsp;488&nbsp;次</dd>
+					        <dd class="search-detail">
+
+
+
+
+如果你的.py文件与C/c&#43;&#43;程序在同<em>一目录
+</em>
+python的默认搜索路径中不包括./（即当前目录），在C程序中加入下面两条语句就：
+
+
+
+PyRun_SimpleString(&quot;import sys&quot;);
+
+PyRun_SimpleString(&quot;sys.path.appe</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/rongc5/article/details/19032657" target="_blank">http://blog.csdn.net/rongc5/article/details/19032657</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/isourire/article/details/44942105"  target="_blank">crontab 中 <em>python</em> 脚本执行失败的解决方法</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/isourire"  target="_blank">isourire</a>&nbsp;&nbsp;&nbsp;日期：2015-04-08 15:55:11&nbsp;&nbsp;&nbsp;浏览&nbsp;61&nbsp;次</dd>
+					        <dd class="search-detail">本文转载自：http://www.acwind.net/blog/archives/1304
+
+
+
+写服务器程序的免不了要经常和 crontab 打交道，定时执行一些脚本什么的。大部分情况下都是 bash 的一些 shell 脚本，但 shell 我不是很熟悉，于是在很多情况下都直接写 <em>Python</em> 脚本来搞定它。今天写了一个操作 PostgreSQL </dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/isourire/article/details/44942105" target="_blank">http://blog.csdn.net/isourire/article/details/44942105</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/shanliangliuxing/article/details/7980298"  target="_blank">crontab 中 <em>python</em> 脚本执行失败的解决方法</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/shanliangliuxing"  target="_blank">shanliangliuxing</a>&nbsp;&nbsp;&nbsp;日期：2012-09-14 18:40:35&nbsp;&nbsp;&nbsp;浏览&nbsp;1069&nbsp;次</dd>
+					        <dd class="search-detail">
+写服务器程序的免不了要经常和 crontab 打交道，定时执行一些脚本什么的。大部分情况下都是 bash 的一些 shell 脚本，但 shell 我不是很熟悉，于是在很多情况下都直接写<em> Pytho</em>n 脚本来搞定它。今天写了一个操作 PostgreSQL 数据库的<em> Pytho</em>n 脚本，放到 crontab 中定时执行的时候，时间到了却没有任何反映。但</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/shanliangliuxing/article/details/7980298" target="_blank">http://blog.csdn.net/shanliangliuxing/article/details/7980298</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/paul313/article/details/46816117"  target="_blank"><em>python</em>脚本运行出现语法错误：IndentationError: unindent does not match any outer indentation level</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/paul313"  target="_blank">paul313</a>&nbsp;&nbsp;&nbsp;日期：2015-07-09 14:03:02&nbsp;&nbsp;&nbsp;浏览&nbsp;54&nbsp;次</dd>
+					        <dd class="search-detail">
+zz：http://www.crifan.com<em>/pytho</em>n_syntax_error_indentationerror/comment-page-1/
+
+
+
+
+问题】&nb<em>sp;
+一</em>个python脚本，本来都运行好好的，然后写了几行代码，而且也都确保每行都对齐了，但是运行的时候，却出现语法错误：&nbsp;
+Indentatio</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/paul313/article/details/46816117" target="_blank">http://blog.csdn.net/paul313/article/details/46816117</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/u010893023/article/details/40583491"  target="_blank">cocos2d-x 2.x使用<em>python</em>脚本快捷创建项目的简单方法</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/u010893023"  target="_blank">u010893023</a>&nbsp;&nbsp;&nbsp;日期：2014-10-29 11:15:28&nbsp;&nbsp;&nbsp;浏览&nbsp;196&nbsp;次</dd>
+					        <dd class="search-detail">
+原文链接
+
+
+在cocos2d-x2.1.4以上的版本中，取消了使用vs模版创建项目的方法，<em>开始使用py</em>thon脚本创建项<em>目，使用py</em>thon创建项目需要在命令行敲很多指令，比较麻烦。我把这些命令组合在一起，放在了一个批处理文件中，直接双击打开批处理文件就可以通过几个简单的指令来创建项目。
+
+第一步： 新建一个txt文件，将下面这段代码拷贝进</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/u010893023/article/details/40583491" target="_blank">http://blog.csdn.net/u010893023/article/details/40583491</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/u011519892/article/details/9730947"  target="_blank"><em>python</em>语言的作用域</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/u011519892"  target="_blank">u011519892</a>&nbsp;&nbsp;&nbsp;日期：2013-08-03 11:33:03&nbsp;&nbsp;&nbsp;浏览&nbsp;322&nbsp;次</dd>
+					        <dd class="search-detail">
+&nbsp<em>;Pytho</em>n是静态作用域语言，尽管它自身是一个动态语言。也就是说，<em>在Pytho</em>n中变量的作用域是由它在源代码中的位置决定的，这与C有些相&#20284;，但<em>是Pytho</em>n与C在作用域方面的差异还是非常明显的。
+&nbsp; &nbsp; 接下来会<em>谈论Pyth</em>on的作用域规则，在这中间也会说明<em>一下Pyth</em>on与C在作用域方面的不同。
+&n</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/u011519892/article/details/9730947" target="_blank">http://blog.csdn.net/u011519892/article/details/9730947</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/lyhDream/article/details/44240195"  target="_blank"><em>python</em>脚本在命令行中传递参数（附字符查找小案例）</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/lyhDream"  target="_blank">lyhDream</a>&nbsp;&nbsp;&nbsp;日期：2015-03-13 14:11:19&nbsp;&nbsp;&nbsp;浏览&nbsp;234&nbsp;次</dd>
+					        <dd class="search-detail">用命令行调用<em>python</em>脚本的时候，如果想往脚本中传递参数的时候，参数会被<em>python</em>解释器接收，并转换为一系列的字符串，放在sys模块中的argv列表中。因此，可以使用argv[0]来引用第一个参数。
+在命令行中调用，argv[0]中存放的是该脚本的完整路径，如下代码：
+#encoding:gbk
+import sys
+print sys.arg</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/lyhDream/article/details/44240195" target="_blank">http://blog.csdn.net/lyhDream/article/details/44240195</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/yangchao228/article/details/6620014"  target="_blank"><em>python</em> 脚本性能查看简单方式</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/yangchao228"  target="_blank">yangchao228</a>&nbsp;&nbsp;&nbsp;日期：2011-07-20 15:05:53&nbsp;&nbsp;&nbsp;浏览&nbsp;1126&nbsp;次</dd>
+					        <dd class="search-detail">&nbsp;&nbsp;上帝说：“选择了脚本，就不要考虑性能。”我是很支持这句话的，使用脚本要的就是开发速度、良好的扩展性以及可维护性。可惜到了最后，我们的程序难免会运行得太慢，我们的客户不能忍受，这时候，我们就不得不考虑对代码的性能进行优化了。&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; 程序运行慢的原因有很多，比如存在太多的劣化代码（</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/yangchao228/article/details/6620014" target="_blank">http://blog.csdn.net/yangchao228/article/details/6620014</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/hzfsean/article/details/44829821"  target="_blank">利用<em>python</em>语言实现shp文件生成geojson文件</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/hzfsean"  target="_blank">hzfsean</a>&nbsp;&nbsp;&nbsp;日期：2015-04-02 11:26:39&nbsp;&nbsp;&nbsp;浏览&nbsp;105&nbsp;次</dd>
+					        <dd class="search-detail">利用<em>python</em>语言实现shp文件生成geojson文件</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/hzfsean/article/details/44829821" target="_blank">http://blog.csdn.net/hzfsean/article/details/44829821</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/zhangmiaoping23/article/details/43447219"  target="_blank"><em>python</em> 脚本处理IDA的Dif文件</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/zhangmiaoping23"  target="_blank">zhangmiaoping23</a>&nbsp;&nbsp;&nbsp;日期：2015-02-03 11:15:20&nbsp;&nbsp;&nbsp;浏览&nbsp;254&nbsp;次</dd>
+					        <dd class="search-detail">
+dif文件例子：
+
+This&nbsp;difference&nbsp;file&nbsp;has&nbsp;been&nbsp;created&nbsp;by&nbsp;IDA
+
+armhook
+This&nbsp;difference&nbsp;file&nbsp;has&nbsp;been&nbsp;created&nbsp;by&nbsp;I</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/zhangmiaoping23/article/details/43447219" target="_blank">http://blog.csdn.net/zhangmiaoping23/article/details/43447219</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/fgwf1/article/details/8291382"  target="_blank">我的第一个<em>python</em>脚本</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/fgwf1"  target="_blank">fgwf1</a>&nbsp;&nbsp;&nbsp;日期：2012-12-13 16:32:06&nbsp;&nbsp;&nbsp;浏览&nbsp;720&nbsp;次</dd>
+					        <dd class="search-detail">
+这是我写的第一<em>个pytho</em>n脚本，将从芯片厂商得到的android4.0代码按source.android.com的项目划分方式传到本地服务器中。a.py内容：
+from __future__ import print_function
+#!/usr/bi<em>n/pyth</em>on
+
+BaseIcsPath = &quot;/home/chuangyi/</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/fgwf1/article/details/8291382" target="_blank">http://blog.csdn.net/fgwf1/article/details/8291382</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/dxbjfu08/article/details/49154385"  target="_blank">ArcGIS使用字段计算器<em>python</em>脚本整理三规合一图斑</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/dxbjfu08"  target="_blank">dxbjfu08</a>&nbsp;&nbsp;&nbsp;日期：2015-10-15 18:27:33&nbsp;&nbsp;&nbsp;浏览&nbsp;84&nbsp;次</dd>
+					        <dd class="search-detail">
+最近试着使用字段计算器内<em>的pytho</em>n脚本整理图斑，蹒跚学步，做下记录。
+
+1.用地代码与名称转换
+1.1城规用地代码CGYDDM转用地名称CGYDMC<em>
+做一个p</em>ython字典再索引即可（码齐这些分类还挺累。。）
+
+
+
+list = { 
+&#39;A&#39;:&#39;公共管理与公共服务用地&#39;,
+&#39;A1&#39;:</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/dxbjfu08/article/details/49154385" target="_blank">http://blog.csdn.net/dxbjfu08/article/details/49154385</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/huoyin/article/details/6294899"  target="_blank">在Windows系统中，如何<em>python</em>脚本实现分割合并大二进制文件，方便上传</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/huoyin"  target="_blank">huoyin</a>&nbsp;&nbsp;&nbsp;日期：2011-04-01 17:23:00&nbsp;&nbsp;&nbsp;浏览&nbsp;930&nbsp;次</dd>
+					        <dd class="search-detail">"""
+To split a file, type the following command
+split.py [filename] [chunksize in mb]
+
+To recover it back, type the following command
+copy /b [filename].part.0+[filename].part</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/huoyin/article/details/6294899" target="_blank">http://blog.csdn.net/huoyin/article/details/6294899</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		         
+		    </div>
+		    
+		    <div class="csdn-pagination hide-set" >
+		        <span class="page-nav">
+			        <span class="text">共185825条结果</span>
+			        
+			        
+			        	<a href="?p=4&q=python&t=blog&domain=&o=null&s=null&u=null" 
+				         class="btn btn-xs btn-default btn-prev">&lt;
+				        </a>
+			        
+			        
+			        
+			        
+			        	<span class="ellipsis">...</span>
+	            		<a href="?p=3&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  3 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=4&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  4 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=5&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		 class="btn btn-xs btn-default active"  >  5 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=6&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  6 
+	            		</a>
+	            		<span class="ellipsis">...</span>
+
+	                
+			        	
+	            		<a href="?p=17&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  17 
+	            		</a>
+	            		
+
+	                
+				    
+				    
+				    	<a href="?p=6&q=python&t=blog&domain=&o=null&s=null&u=null"
+				        	 class="btn btn-xs btn-default btn-next">&gt;
+				        </a>
+				    
+			        
+		        </span>
+		        <span class="page-go">
+			        <span class="text">到第</span>
+			        <input type="text" style="width:30px" id="p1" value="5"/>
+			        <span class="text">页</span>
+
+			        
+			        <button type="button"  class="btn btn-xs btn-default btn-go"  onclick="location.href='?p=' + $('#p1').val() + '&q=python&t=blog&o=null&s=null&u=null'">GO</button>
+		        </span>
+			</div>
+		    
+		    <div  style="display:none">
+		    	<p class="pointout">抱歉，没有找到相关结果。</p>
+		    </div>
+		    
+	    	<div class="relation-search tracking-ad" data-mod="popu_49" >
+			    <p><em>python</em>的相关搜索</p>
+			    <ul>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python-tesseract&t=blog' class="rel-search" title="python-tesseract" >python-tesseract</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python xml&t=blog' class="rel-search" title="python xml" >python xml</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 截图&t=blog' class="rel-search" title="python 截图" >python 截图</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python &lt <&t=blog' class="rel-search" title="python &lt <" >python &lt <</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python pexpect&t=blog' class="rel-search" title="python pexpect" >python pexpect</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 调用DLL返回值&t=blog' class="rel-search" title="python 调用DLL返回值" >python 调用DLL...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=爬虫 Python&t=blog' class="rel-search" title="爬虫 Python" >爬虫 Python</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python获取父标签&t=blog' class="rel-search" title="python获取父标签" >python获取父...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 正则&t=blog' class="rel-search" title="python 正则" >python 正则</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python的random模块&t=blog' class="rel-search" title="python的random模块" >python的random...</a>
+
+			    		</li>
+			    	
+			    </ul> 
+    			<script type="text/javascript">
+					$( function () {
+						var $href = $( '.rel-search' );
+						
+						$href.each( function ( i, item ) {
+							var href = item.getAttribute( 'href', 2 );
+							var reg = /q=(.*?)&/g;
+
+							item.href = href.replace( reg, function ( all, sub ) {
+								return 'q=' + encodeURIComponent( sub ) +"&";
+							} );
+						} );
+						//console.log( href );
+					} );
+				</script>   
+		    </div>
+		    <div class="search-from2"  >
+		    	<form>
+		        	<div class="search-text-con2">
+		        		<input type="text" path="q" class="search-text2" name="q" value="python"  autocomplete="off" />
+		        		<input type="hidden" id="tb" name="t" value="blog" />
+		        		<input type="hidden" id="ob" name="o" value="null" />
+		        		<input type="hidden" id="sb" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		    </div>
+		        
+		    </div>
+			<div class="con-r">
+		    	<div style="height:96px;"> </div>
+<!-- 		    	<div class="adv"> -->
+
+<!-- 		    	</div> -->
+		        
+<!-- 		    	<div class="common-box"  style="margin-top:116px;"> -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+
+
+
+<!-- 		            </div> -->
+<!-- 		        </div> -->
+		        
+<!-- 		        <div class="common-box"  id="source-list" > -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+		            
+<!-- 		            </div> -->
+<!-- 				</div> -->
+
+		        
+<!-- 		        <div class="common-box" id="rel_job" style="display:none"> -->
+<!-- 		        	<h3 id="job-pos-title" style="display:none">相关职位</h3> -->
+<!-- 		        	<ul class="relation-pos tracking-ad" data-mod="popu_50" data-pid="so" > -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+
+
+                <!--学院课程[edu course] 的div  if (t != null && t != "" && t != "course") {-->
+               	
+	                <div id="edu_so_reco">
+	                    <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script>
+	                    <script type="text/javascript">
+	                   // if (show_course) {
+	                    	csdn.position.showEdu({
+	                            sourceType: "so",
+	                            searchType: "detail",
+	                            searchKey: "python",
+	                            username: getCookie('UserName'),
+	                            recordcount: "4",
+	                            containerId: "edu_so_reco"  //容器DIV的id。
+	                        });
+	                   // }
+	                        
+	                    </script>
+	                </div>
+	               
+
+
+				
+		        <div class="rightadv">
+		        	<!--AdForward Begin:-->
+					<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|pip&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+					<!--AdForward End-->
+		        </div>
+		        
+		        
+		        
+		        
+<!-- 		        <div class="common-box"> -->
+<!-- 		        	<h3>相关外包项目</h3> -->
+<!-- 		        	<ul class="relation-project"> -->
+<!-- 		            <li><a href="#">一个好玩的录屏mac项目</a></li> -->
+<!-- 		            <li><a href="#">win32项目移植到Android</a></li> -->
+<!-- 		            <li><a href="#">从svn上检出为的web项目，检出后不能发布到...</a></li> -->
+<!-- 		            <li><a href="#">dwz框架项目 中调用uploadify方法上传图片</a></li> -->
+<!-- 		            <li><a href="#">GitHub上最热门的开源项目</a></li>            -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+		    
+		    
+		    
+		  </div>
+		</div>
+		
+		<ul class="search-suggest2" id="search-suggest2"></ul>
+		<ul class="search-suggest2" id="search-suggest3"></ul>
+
+		<div id="csdn_pub_footer" class="margin_foot_top" style="padding-top:20px; padding-bottom:20px;">
+			<script src="http://csdnimg.cn/pubfooter/js/publib_footer.js"></script>
+		</div>
+		<script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>
+	</body>
+	
+</html>

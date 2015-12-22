@@ -1,0 +1,1584 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CSDN搜索</title>
+		<link href="http://csdnimg.cn/public/common/libs/bootstrap/css/bootstrap.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/themes/default/css/common.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/static/css/pagination.css" rel="stylesheet">
+		<link href="http://c.csdnimg.cn/public/common/toolbar/css/index.css" rel="stylesheet" >
+		<link href="/so/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	    <link href="/so/css/bootstrap-responsive.css" rel="stylesheet">
+	    <link href="http://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+<!-- 	    自动补全 -->
+<!-- 	    <link type="text/css" rel="stylesheet" href="http://fed.csdn.net/static/css/main.css"> -->
+
+    	<link type="text/css" href="/so/css/main.css?1314" rel="stylesheet">
+    	
+<!--     	<script src="http://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script> -->
+		<script type="text/javascript" src="/so/js/jquery.js"></script>
+		<script type="text/javascript" src="/so/js/bootstrap.min.js"></script>
+		<script src="/so/js/jsonp.js" type="text/javascript"></script>
+		<script src="/so/js/ser_person.js" type="text/javascript"></script>
+
+
+		
+		
+		<script type="text/javascript">
+// 		$( function () {			
+// 			csdn.AutoSearch.run({
+// 				search: ".search-text2",
+// 				onSelect: function(data) {
+// 					alert(data.value);
+// 				}
+// 			})	
+// 		} );
+
+
+			function GetQueryString(name) {
+			   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+			   var r = window.location.search.substr(1).match(reg);
+			   if (r!=null) return unescape(r[2]); return null;
+			}
+			//var show_course = false;
+			
+			$(document).ready(function(){
+			    $("ul li").click(function(){
+			    	
+			    	var ili = $(".search-type")[0].children.length;
+					for (var i = 0; i < ili; i++) {
+						$(".search-type")[0].children[i].style.color="#000000";
+					}
+					
+			    	if (this.innerHTML == "资讯") {
+			    		$("#tt")[0].value = "news";
+			    		$("#tb")[0].value = "news";
+			    		
+			    		$(".search-type")[0].children[1].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="inline";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+ 			    		$("input[name='o1']").each(function() {
+ 				    		if($(this).val() == "null")
+ 				    		{
+ 				    			$(this).attr("checked",true)
+ 				    		}});
+// 			    		$("input[name='o1'][value='time'").attr("checked",true);
+			    		
+			    	} else if (this.innerHTML == "博文") {
+			    		$("#tt")[0].value = "blog";
+			    		$("#tb")[0].value = "blog";
+			    		
+			    		$(".search-type")[0].children[2].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "课程") {
+			    		$("#tt")[0].value = "course";
+			    		$("#tb")[0].value = "course";
+			    		
+			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "讨论") {
+			    		$("#tt")[0].value = "discuss";
+			    		$("#tb")[0].value = "discuss";
+			    		
+			    		$(".search-type")[0].children[3].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "代码") {
+			    		$("#tt")[0].value = "code";
+			    		$("#tb")[0].value = "code";
+			    		
+			    		$(".search-type")[0].children[4].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+// 			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "文档") {
+			    		$("#tt")[0].value = "doc";
+			    		$("#tb")[0].value = "doc";
+			    		
+			    		$(".search-type")[0].children[5].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = $("input[name='o3']:checked").val();
+			    		$("#sb")[0].value = $("input[name='o3']:checked").val();
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="inline";
+// 			    		$("#o_ask")[0].style.display="none";
+// 			    	} else if (this.innerHTML == "问答") {
+// 			    		$("#tt")[0].value = "ask_topic";
+// 			    		$("#tb")[0].value = "ask_topic";
+			    		
+// 			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = "";
+// 			    		$("#ob")[0].value = "";
+// 			    		$("#st")[0].value = $("input[name='o4']:checked").val();
+// 			    		$("#sb")[0].value = $("input[name='o4']:checked").val();
+			    		
+// 			    		$("#o_news")[0].style.display="none";
+// 			    		$("#o_disscus_code")[0].style.display="none";
+// 			    		$("#o_doc")[0].style.display="none";
+// // 			    		$("#o_ask")[0].style.display="inline";
+			    		
+			    	} else {
+			    		$("#tt")[0].value = "";
+			    		$("#tb")[0].value = "";
+			    		
+			    		$(".search-type")[0].children[0].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	}
+			    	document.search_form_1.submit();
+			    });
+			});
+			function changeOrder(value) {
+				$("#ot")[0].value = value;
+	    		$("#ob")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+			function changeDocOrder(value) {
+				$("#st")[0].value = value;
+	    		$("#sb")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+// 			function changeAskOrder(value) {
+// 				$("#st")[0].value = value;
+// 	    		$("#sb")[0].value = value;
+	    		
+// 	    		document.search_form_1.submit();
+// 			}
+			
+			
+		</script>
+		
+		<script language="JavaScript" type="text/JavaScript">
+		$(document).ready(function(){
+				var ili = $(".search-type")[0].children.length;
+				for (var i = 0; i < ili; i++) {
+					$(".search-type")[0].children[i].style.color="#000000";
+				}
+				var t = GetQueryString("t");
+				
+				if (t == "news") {
+					$(".search-type")[0].children[1].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="inline";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+			    	$("input[name='o1']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "blog") {
+					$(".search-type")[0].children[2].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "course") {
+					$(".search-type")[0].children[6].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "discuss") {
+					$(".search-type")[0].children[3].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="inline";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "code") {
+					$(".search-type")[0].children[4].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "doc") {
+					$(".search-type")[0].children[5].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="inline";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o3']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+// 				} else if (t == "ask_topic") {
+// 					$(".search-type")[0].children[6].style.color="#990000";
+					
+// 					$("#o_news")[0].style.display="none";
+// 		    		$("#o_disscus_code")[0].style.display="none";
+// 		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="inline";
+// 		    		$("input[name='o3']").each(function() {
+
+// 			    		{
+// 			    			$(this).attr("checked",true)
+// 			    		}});
+				} else {
+					$(".search-type")[0].children[0].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+		    		//$("#o_ask")[0].style.display="none";
+				}
+				
+// 				function soso( val ) {
+
+// 		    		document.search_form_1.submit();
+// 				}
+				
+// 				$( '.search-btn2' ).bind( 'click', function () {
+// 					var $this = $( this );
+// 					var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 					var val = $form.serialize();
+					
+// 					console.log( val );
+// 					//soso( val );
+// 				} );
+				
+// 				$( '.search-text2' ).bind( 'keydown', function ( et ) {
+// 					var evt = et || window.event;
+					
+// 					if ( evt.keyCode == 13 )
+// 					{
+// 						var $this = $( this );
+// 						var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 						var val = $form.serialize();
+// 						console.log( val );
+// 						//soso( val );
+// 					}
+// 				} );				
+			});
+// 			windows.onload = onload_handler;
+		</script>
+		<script type="text/javascript">
+		domReady(function(){
+
+		    var oT = getByClass(document,'search-text2')[0];
+		    var oT2 = getByClass(document,'search-text2')[1];    
+		    var oFormcon = getByClass(document,'search-from2');
+		    var oForm1 = oFormcon[0].children[0];
+		    var oForm2 = oFormcon[1].children[0];
+
+		    var pos1 = getPos(oForm1).top;
+		    var pos2 = getPos(oForm2).top;    
+
+		    var oUl = document.getElementById('search-suggest2');
+		    var oUl2 = document.getElementById('search-suggest3');
+		    oUl.style.top = pos1 + 32 + 'px';
+		    oUl2.style.top = pos2 + 32 + 'px';
+		    
+		    var url=document.domain;
+		    if (window.location.port != 80) {
+		    	url += ":" +window.location.port;
+		    }
+		    var URL = window.location.protocol +'//'+url+'/so/search/so/autocomplete.do';
+		    var aLi=oUl.children;
+		    var aLi2=oUl2.children;
+
+		    window.iNow=-1;
+		    window.iNow2=-1;
+		    oT.focus();    
+		    var oldValue='';
+		    var oldValue2='';
+
+		    oT.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl.style.display='none';
+		            }
+		            else
+		            {
+		                oUl.style.display='block';
+		                var data = eval('('+json.suggestions+')');  
+		            }
+		            oUl.innerHTML='';
+		            for(var i=0; i<data.length; i++)
+		            {
+		                var oLi=document.createElement('li');
+		                oLi.innerHTML=data[i].key;
+		                oUl.appendChild(oLi);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi[i].index=i;
+		            aLi[i].onmouseover=function(){
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            this.style.background='#ccc';            
+		            
+		            iNow=this.index;
+		           
+		            }
+		            
+		            aLi[i].onclick=function()
+		            {
+		            	 oT.value=aLi[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue=oT.value;
+		    }
+
+		    oT.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow++;
+		            
+		            if(iNow==aLi.length){
+		                iNow=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;
+		            }else{
+		                oT.value=oldValue;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow--;            
+		            if(iNow==-2){
+		                iNow=aLi.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;   
+		            }else{
+		                oT.value=oldValue;  
+		            }
+		            return false;   
+		        }   
+		    }
+
+
+		    oT2.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT2.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl2.style.display='none';
+		            }
+		            else
+		            {
+		                oUl2.style.display='block';
+		                var data2 = eval('('+json.suggestions+')');  
+		            }
+		            oUl2.innerHTML='';
+		            for(var i=0; i<data2.length; i++)
+		            {
+		                var oLi2=document.createElement('li');
+		                oLi2.innerHTML=data2[i].key;
+		                oUl2.appendChild(oLi2);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi2[i].index=i;
+		            aLi2[i].onmouseover=function(){
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            this.style.background='#ccc';
+		            iNow2=this.index;
+		            
+		            }
+		            
+		            aLi2[i].onclick=function()
+		            {
+		            	oT2.value=aLi2[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue2=oT2.value;
+		    }
+
+		    oT2.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow2++;
+		            
+		            if(iNow2==aLi2.length){
+		                iNow2=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;
+		            }else{
+		                oT2.value=oldValue2;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow2--;            
+		            if(iNow2==-2){
+		                iNow2=aLi2.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;   
+		            }else{
+		                oT2.value=oldValue2;  
+		            }
+		            return false;   
+		        }   
+		    }
+		    oT.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    oT2.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    document.onclick = function()
+		    {
+		        oUl.style.display='none';
+		        oUl2.style.display='none';
+		    }
+		
+		    
+// 		    var oSourcon = document.getElementById('source-list');
+// 			var oSource = oSourcon.children[1];
+// 			var sourceURL = 'http://192.168.5.91:8080/so/search/so/getQualityArticle.do';	
+// 			var keyword = GetRequest().q;
+// 			jsonp(sourceURL, {q: keyword}, function (json){
+		            
+// 					var data = eval('('+json.suggestions+')');
+		            
+// 					if(data.length==0)
+// 		            {
+// 		                oSourcon.style.display='none';
+// 		            }
+// 		            else
+// 		            {
+// 		               oSourcon.style.display='block';
+// 		                var data = eval('('+json.suggestions+')');				
+// 		            }
+					
+// 					for(var i=0; i<6; i++)
+// 		            {
+// 		                var oDl=document.createElement('dl');
+// 						var oDt=document.createElement('dt');
+// 						var oDd=document.createElement('dd');
+// 						var oImg=document.createElement('img');
+// 						var oA=document.createElement('a');
+// 						var oA2=document.createElement('a');
+						
+// 						oImg.src = data[i].pic;
+// 						oImg.width = 73;
+// 						oImg.height = 70;
+// 						oA.href = data[i].url;
+// 						oA.title = data[i].title;
+						
+// 						oA2.href = data[i].url;
+// 						oA2.title = data[i].title;
+// 						oA2.innerHTML = data[i].title;
+						
+// 						oA.appendChild(oImg);
+// 						oDt.appendChild(oA);
+// 						oDd.appendChild(oA2);
+// 						oDl.appendChild(oDt);
+// 						oDl.appendChild(oDd);
+// 						oSource.appendChild(oDl);
+// 		            }	
+					
+// 			}, 'callback');
+		});
+		
+		</script>
+
+	</head>
+	<body>
+
+		<script id="toolbar-tpl-scriptId"  prod="so" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" domain="http://so.csdn.net/so/" type="text/javascript"></script>
+		<div class="topadv">
+			<!--AdForward Begin:-->
+			<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|banner1&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+			<!--AdForward End-->
+		</div>
+		<div class="main-container">
+			<div class="con-l">
+		    <ul class="search-type">
+		    	<li>全部</li>    
+		        <li>资讯</li>   
+		        <li>博文</li>   
+		        <li>讨论</li>    
+		        <li>代码</li>    
+		        <li>文档</li>
+                <li>课程</li>
+<!-- 		        <li>问答</li> -->
+		    </ul>
+		    <div class="search-from2" style="position:relative">
+		    	<form id="search_form_1" name="search_form_1" >
+		        	<div class="search-text-con2">
+		        		<input type="text"  path="q" class="search-text2" id="q1" name="q" value="python"  autocomplete="off"/>
+		        		<input type="hidden" id="tt" name="t" value="blog" />
+		        		<input type="hidden" id="ot" name="o" value="null" />
+		        		<input type="hidden" id="st" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		        
+		        <div class="search-addition-con" >
+		        	<div id="o_news" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o1" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序</span>
+	 	             	<em><input type="radio" name="o1" value="time" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按时间排序 </span>
+			    	</div>
+			    	<div id="o_disscus_code" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o2" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序 </span>
+	 	             	<em><input type="radio" name="o2" value="reply" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按回复数排序</span>
+			    	</div>
+			    	<div id="o_doc" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o3" value="all" onchange="changeDocOrder(this.value);" onClick="this.blur();"  checked></em><span>全部</span>
+	 	             	<em><input type="radio" name="o3" value="doc" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>DOC</span>
+	 	             	<em><input type="radio" name="o3" value="ppt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PPT</span>
+	 	             	<em><input type="radio" name="o3" value="txt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>TXT</span>
+	 	             	<em><input type="radio" name="o3" value="pdf" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PDF</span>
+			    	</div>
+<!-- 			    	<div id="o_ask" style="display:none" class="search-addition"> -->
+<!-- 			    		<em><input type="radio" name="o4" value="1" onchange="changeAskOrder(this.value);" onClick="this.blur();"  checked></em><span>已解答</span> -->
+<!-- 	 	             	<em><input type="radio" name="o4" value="0" onchange="changeAskOrder(this.value);" onClick="this.blur();" ></em><span>未解答</span> -->
+<!-- 			    	</div> -->
+		        </div>
+		    </div>
+		    
+		    
+		    <div class="add-tag-con"  style="display:none">
+		    	
+		    	    
+		    </div>
+		    
+		    <div class="search-list-con" >
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/offbye/article/details/47913517"  target="_blank">树莓派把一个<em>python</em>脚本作为服务运行，配置开机自动启动</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/offbye"  target="_blank">offbye</a>&nbsp;&nbsp;&nbsp;日期：2015-08-23 22:57:14&nbsp;&nbsp;&nbsp;浏览&nbsp;582&nbsp;次</dd>
+					        <dd class="search-detail">周六黑客马拉松做了个树莓派遥控船，发现简单的把<em>python</em>脚本加到rc.local好像无法自动启动，于是找到了下面的方法，做成一个服务。首先写个<em>Python</em>脚本文件保存在/home/pi/script/ledblink.py123456789101112131415#!/usr/bin/env <em>python</em> import RPi.GPIO as </dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/offbye/article/details/47913517" target="_blank">http://blog.csdn.net/offbye/article/details/47913517</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/wangzhaopeng0316/article/details/8661570"  target="_blank">用<em>python</em>脚本执行ssh远程登录多台机器</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/wangzhaopeng0316"  target="_blank">wangzhaopeng0316</a>&nbsp;&nbsp;&nbsp;日期：2013-03-11 23:01:38&nbsp;&nbsp;&nbsp;浏览&nbsp;401&nbsp;次</dd>
+					        <dd class="search-detail">用<em>python</em>脚本执行ssh远程登录多台机器
+
+分类： 
+linux 2012-08-29 14:27 
+295人阅读 评论(0)
+收藏 
+举报<em>
+
+远程</em>登录python脚本sshdstcommand
+
+
+Kid<em>s Retu</em>rn: [Python ]一个用ssh 来远程登录 多台机器<em>并执行命令的</em>脚本
+
+[Python ]一个用ss</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/wangzhaopeng0316/article/details/8661570" target="_blank">http://blog.csdn.net/wangzhaopeng0316/article/details/8661570</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/hjx5200/article/details/38536981"  target="_blank"><em>Python</em>语言（三）类型扩展</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/hjx5200"  target="_blank">hjx5200</a>&nbsp;&nbsp;&nbsp;日期：2014-08-13 15:29:00&nbsp;&nbsp;&nbsp;浏览&nbsp;176&nbsp;次</dd>
+					        <dd class="search-detail">仅仅提高基本数据类型是不过的，在需要处理超过一个整数、字符串时，</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/hjx5200/article/details/38536981" target="_blank">http://blog.csdn.net/hjx5200/article/details/38536981</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/xiaoxiaoniaoer1/article/details/8542228"  target="_blank"><em>python</em>语言中，对于cursor的查询明明有结果，为什么print cursor.rowcount结果为-1？</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/xiaoxiaoniaoer1"  target="_blank">xiaoxiaoniaoer1</a>&nbsp;&nbsp;&nbsp;日期：2013-01-25 15:30:00&nbsp;&nbsp;&nbsp;浏览&nbsp;2472&nbsp;次</dd>
+					        <dd class="search-detail">从网上搜了很多资料，没有对口的，抓狂。没办法自己研究了一下，相信写出来能够帮到很多人。
+ 
+下边是我写的一段代码，为了方便大家看我加了行号。从下边代码中第4行可以看到，rowcount结果为-1，但是从第5行却可以将查询结果打印出来。显然查询是有结果的，为什么rowcount为-1呢？
+第1行>>> db = mysql.connector.Conne</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/xiaoxiaoniaoer1/article/details/8542228" target="_blank">http://blog.csdn.net/xiaoxiaoniaoer1/article/details/8542228</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/vicker109/article/details/468001"  target="_blank">学习<em>Python</em>语言必备的资源[转]</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/vicker109"  target="_blank">vicker109</a>&nbsp;&nbsp;&nbsp;日期：2005-08-30 16:20:00&nbsp;&nbsp;&nbsp;浏览&nbsp;844&nbsp;次</dd>
+					        <dd class="search-detail">学习<em>Python</em>语言必备的资源 作者： ZDNET CHINA 特稿
+document.title="学<em>习Pytho</em>n语言必备的资源 作者： ZDNET CHINA 特稿 - "+document.title<em>
+ Pyth</em>on是一种不但成熟而且功能也十分强大的面向对象程序设计语言。它的功能性现在已经可以与Java相媲美了。<em>尽管Pyth</em>on有着这样或者那</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/vicker109/article/details/468001" target="_blank">http://blog.csdn.net/vicker109/article/details/468001</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/crslee/article/details/44648339"  target="_blank"><em>python</em>语言的动态性4</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/crslee"  target="_blank">crslee</a>&nbsp;&nbsp;&nbsp;日期：2015-03-26 12:53:03&nbsp;&nbsp;&nbsp;浏览&nbsp;45&nbsp;次</dd>
+					        <dd class="search-detail"><em>
+pytho</em>n在程序运行的时候可以更改程序的字节码，并且根据修改的操作，动态执行。
+</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/crslee/article/details/44648339" target="_blank">http://blog.csdn.net/crslee/article/details/44648339</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/dijchen/article/details/4404892"  target="_blank">学习《<em>Python</em>语言入门》第一章 开始</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/dijchen"  target="_blank">dijchen</a>&nbsp;&nbsp;&nbsp;日期：2009-08-03 17:51:00&nbsp;&nbsp;&nbsp;浏览&nbsp;175&nbsp;次</dd>
+					        <dd class="search-detail">端正态度后，认认真真地看了一遍。
+第一次看时，就觉得这一章有很多文字比较抽象，不好懂。或者说我本来不懂，看了也不懂。
+发现这本书每一章的第一节都以问句开始，分析必要性。然后才开始论述更细的内容，比较符合我的特点。
+为什么<em>要使用Pyt</em>hon？列出了很多原因，有很多原因是我不了解的，也是我不能想象的。总而<em>言之，Pyt</em>hon似乎很厉害，能做很多的事</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/dijchen/article/details/4404892" target="_blank">http://blog.csdn.net/dijchen/article/details/4404892</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/lbaby/article/details/6633229"  target="_blank">一个并发调用ping 的<em>python</em> 脚本</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/lbaby"  target="_blank">lbaby</a>&nbsp;&nbsp;&nbsp;日期：2011-07-25 22:22:48&nbsp;&nbsp;&nbsp;浏览&nbsp;848&nbsp;次</dd>
+					        <dd class="search-detail">
+在github上查看源代码
+
+使用方法：<em>
+
+
+</em>
+python p.py 132.35.98.6 132.35.98.7 132.35.98.10 &nbsp;132.35.98.11 132.35.98.12 132.35.98.8 g.cn
+输出
+{'132.35.98.12': '9999', '132.35.98.10': </dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/lbaby/article/details/6633229" target="_blank">http://blog.csdn.net/lbaby/article/details/6633229</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/ren911/article/details/5930810"  target="_blank">用C/C++扩展<em>Python</em>语言</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/ren911"  target="_blank">ren911</a>&nbsp;&nbsp;&nbsp;日期：2010-10-10 00:47:00&nbsp;&nbsp;&nbsp;浏览&nbsp;516&nbsp;次</dd>
+					        <dd class="search-detail"><em>Python</em> 是一门功能强大的脚本语言，它的强大不仅表现在功能上，还表现在其扩展性上。她提供大量的API以方便程序员利用C/C++对<em>Python</em>进行扩展。因为 执行速度慢几乎是所有脚本语言的通病，<em>Python</em>通过一个巧妙的方法，使得程序员可以利用C/C++编写执行速度比较慢的模块，从而获得与C/C++差 不多的执行性能。本文给出一个例子说明怎样用C来扩展</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/ren911/article/details/5930810" target="_blank">http://blog.csdn.net/ren911/article/details/5930810</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/rootsongjc/article/details/8893768"  target="_blank"><em>Python</em>语言与C、Java的不同之处</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/rootsongjc"  target="_blank">rootsongjc</a>&nbsp;&nbsp;&nbsp;日期：2013-05-07 18:25:53&nbsp;&nbsp;&nbsp;浏览&nbsp;410&nbsp;次</dd>
+					        <dd class="search-detail">
+今天开始学<em>习Pytho</em>n，之前学习过C/C&#43;&#43;，Java，在此比较一<em>下Pytho</em>n与这几种语言的不同之处来帮助自己学习。以下主要从语法方面来探讨。
+
+不支持自增/自减操作，比如n&#43;&#43;, n--后的结果还<em>是你；Pyt</em>hon是动态类型语言，不需要预先声明变来那个的类型，变量在赋&#20540;的那一刻被初始化；3&lt</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/rootsongjc/article/details/8893768" target="_blank">http://blog.csdn.net/rootsongjc/article/details/8893768</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/robin_chenyu/article/details/18261249"  target="_blank">调用<em>python</em>脚本清理xp系统临时文件</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/robin_chenyu"  target="_blank">robin_chenyu</a>&nbsp;&nbsp;&nbsp;日期：2014-01-14 13:38:40&nbsp;&nbsp;&nbsp;浏览&nbsp;281&nbsp;次</dd>
+					        <dd class="search-detail">
+
+clean_py
+
+Table of Contents
+
+
+1. 清理XP下临时文件脚本
+
+
+
+1 清理XP<em>下临时文件脚</em>本
+
+调用Python程序清理文件夹下的临时文件还是很方便的。
+
+import os
+
+profile_dir = os.getenv(&quot;USERPROFILE&quot;)
+
+templat</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/robin_chenyu/article/details/18261249" target="_blank">http://blog.csdn.net/robin_chenyu/article/details/18261249</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/PursueT/article/details/7538254"  target="_blank"><em>python</em>语言解析xml文件</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/PursueT"  target="_blank">PursueT</a>&nbsp;&nbsp;&nbsp;日期：2012-05-05 20:55:13&nbsp;&nbsp;&nbsp;浏览&nbsp;166&nbsp;次</dd>
+					        <dd class="search-detail"><em>python</em>语言解析xml文件的常用的有两种方式：
+
+
+通过MiniDom库解析xml文件
+通过ElementTree库解析xml文件
+MiniDom方式解析xml
+ xml文件以data.xml为例，具体操作如下：
+data.xml:
+
+1.0" encoding="utf-8"?>
+
+   保存用户的信息
+    
+    </dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/PursueT/article/details/7538254" target="_blank">http://blog.csdn.net/PursueT/article/details/7538254</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/piaoxuan1987/article/details/46336071"  target="_blank"><em>Python</em>语言十分钟快速入门</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/piaoxuan1987"  target="_blank">piaoxuan1987</a>&nbsp;&nbsp;&nbsp;日期：2015-06-02 22:09:15&nbsp;&nbsp;&nbsp;浏览&nbsp;62&nbsp;次</dd>
+					        <dd class="search-detail">
+<em>
+Pyth</em>on（蟒蛇）是一种动态解释型的编程语<em>言。Pyth</em>on可以在Windows、UNIX、MAC等多种操作系统上使用，也可以在Java、.NET开发平台上使用。
+<em>
+
+
+</em>
+python logo
+
+
+<em>
+
+【特</em>点】
+
+1 Py<em>thon使用</em>C语言开发，但是Python不再有C语言中的指<em>针等复杂的数</em>据类型。
+
+2 Python</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/piaoxuan1987/article/details/46336071" target="_blank">http://blog.csdn.net/piaoxuan1987/article/details/46336071</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/a87b01c14/article/details/45824765"  target="_blank"><em>Python</em>语言十分钟快速入门</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/a87b01c14"  target="_blank">a87b01c14</a>&nbsp;&nbsp;&nbsp;日期：2015-05-18 17:16:22&nbsp;&nbsp;&nbsp;浏览&nbsp;65&nbsp;次</dd>
+					        <dd class="search-detail">
+
+【简介】<em>
+
+Py</em>thon（蟒蛇）是一种动态解释型的编<em>程语言。Py</em>thon可以在Windows、UNIX、MAC等多种操作系统上使用，也可以在Java、.NET开发平台上使用。<em>
+
+
+</em>
+python logo
+<em>
+
+【特点</em>】
+
+1 Pyt<em>hon使用C</em>语言开发，但是Python不再有C语言中的指针<em>等复杂的数据</em>类型。
+
+2 Pyt</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/a87b01c14/article/details/45824765" target="_blank">http://blog.csdn.net/a87b01c14/article/details/45824765</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		        	
+		        	
+		        	
+		        	
+		        	
+			        	<dl class="search-list">
+					        <dt><a href="http://blog.csdn.net/wangzhaopeng0316/article/details/8456645"  target="_blank">C调用<em>Python</em>脚本文件里的函数</a></dt>
+					        <dd class="author-time">作者：<a href="http://my.csdn.net/wangzhaopeng0316"  target="_blank">wangzhaopeng0316</a>&nbsp;&nbsp;&nbsp;日期：2013-01-01 01:08:43&nbsp;&nbsp;&nbsp;浏览&nbsp;403&nbsp;次</dd>
+					        <dd class="search-detail">
+C调<em>用Pytho</em>n脚本文件里的函数[复制链接]
+
+
+
+&nbsp;
+&nbsp;
+
+<em>
+
+
+</em>
+
+
+C调用Python脚本文件里的函数[复制链接]
+
+
+
+
+&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+电梯直达
+1#
+
+
+发表于 2009-10-3 08:40:25|只看该作者|倒序浏览
+
+
+
+
+
+
+
+
+
+
+</dd>
+							<dd class="search-link"><a href="http://blog.csdn.net/wangzhaopeng0316/article/details/8456645" target="_blank">http://blog.csdn.net/wangzhaopeng0316/article/details/8456645</a></dd>
+				        </dl>
+		        	
+		        	
+
+			        
+		        	
+		        	
+		        	
+		        	
+
+                    
+		        	
+
+<!-- 			        	<dl class="search-list"> -->
+
+
+
+
+<!-- 				        </dl> -->
+
+
+		        
+		         
+		    </div>
+		    
+		    <div class="csdn-pagination hide-set" >
+		        <span class="page-nav">
+			        <span class="text">共185825条结果</span>
+			        
+			        
+			        	<a href="?p=6&q=python&t=blog&domain=&o=null&s=null&u=null" 
+				         class="btn btn-xs btn-default btn-prev">&lt;
+				        </a>
+			        
+			        
+			        
+			        
+			        	<span class="ellipsis">...</span>
+	            		<a href="?p=5&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  5 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=6&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  6 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=7&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		 class="btn btn-xs btn-default active"  >  7 
+	            		</a>
+	            		
+
+	                
+			        	
+	            		<a href="?p=8&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  8 
+	            		</a>
+	            		<span class="ellipsis">...</span>
+
+	                
+			        	
+	            		<a href="?p=17&q=python&t=blog&domain=&o=null&s=null&u=null" 
+	            		   class="btn btn-xs btn-default">  17 
+	            		</a>
+	            		
+
+	                
+				    
+				    
+				    	<a href="?p=8&q=python&t=blog&domain=&o=null&s=null&u=null"
+				        	 class="btn btn-xs btn-default btn-next">&gt;
+				        </a>
+				    
+			        
+		        </span>
+		        <span class="page-go">
+			        <span class="text">到第</span>
+			        <input type="text" style="width:30px" id="p1" value="7"/>
+			        <span class="text">页</span>
+
+			        
+			        <button type="button"  class="btn btn-xs btn-default btn-go"  onclick="location.href='?p=' + $('#p1').val() + '&q=python&t=blog&o=null&s=null&u=null'">GO</button>
+		        </span>
+			</div>
+		    
+		    <div  style="display:none">
+		    	<p class="pointout">抱歉，没有找到相关结果。</p>
+		    </div>
+		    
+	    	<div class="relation-search tracking-ad" data-mod="popu_49" >
+			    <p><em>python</em>的相关搜索</p>
+			    <ul>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python-tesseract&t=blog' class="rel-search" title="python-tesseract" >python-tesseract</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python xml&t=blog' class="rel-search" title="python xml" >python xml</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 截图&t=blog' class="rel-search" title="python 截图" >python 截图</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python &lt <&t=blog' class="rel-search" title="python &lt <" >python &lt <</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python pexpect&t=blog' class="rel-search" title="python pexpect" >python pexpect</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 调用DLL返回值&t=blog' class="rel-search" title="python 调用DLL返回值" >python 调用DLL...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=爬虫 Python&t=blog' class="rel-search" title="爬虫 Python" >爬虫 Python</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python获取父标签&t=blog' class="rel-search" title="python获取父标签" >python获取父...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 正则&t=blog' class="rel-search" title="python 正则" >python 正则</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python的random模块&t=blog' class="rel-search" title="python的random模块" >python的random...</a>
+
+			    		</li>
+			    	
+			    </ul> 
+    			<script type="text/javascript">
+					$( function () {
+						var $href = $( '.rel-search' );
+						
+						$href.each( function ( i, item ) {
+							var href = item.getAttribute( 'href', 2 );
+							var reg = /q=(.*?)&/g;
+
+							item.href = href.replace( reg, function ( all, sub ) {
+								return 'q=' + encodeURIComponent( sub ) +"&";
+							} );
+						} );
+						//console.log( href );
+					} );
+				</script>   
+		    </div>
+		    <div class="search-from2"  >
+		    	<form>
+		        	<div class="search-text-con2">
+		        		<input type="text" path="q" class="search-text2" name="q" value="python"  autocomplete="off" />
+		        		<input type="hidden" id="tb" name="t" value="blog" />
+		        		<input type="hidden" id="ob" name="o" value="null" />
+		        		<input type="hidden" id="sb" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		    </div>
+		        
+		    </div>
+			<div class="con-r">
+		    	<div style="height:96px;"> </div>
+<!-- 		    	<div class="adv"> -->
+
+<!-- 		    	</div> -->
+		        
+<!-- 		    	<div class="common-box"  style="margin-top:116px;"> -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+
+
+
+<!-- 		            </div> -->
+<!-- 		        </div> -->
+		        
+<!-- 		        <div class="common-box"  id="source-list" > -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+		            
+<!-- 		            </div> -->
+<!-- 				</div> -->
+
+		        
+<!-- 		        <div class="common-box" id="rel_job" style="display:none"> -->
+<!-- 		        	<h3 id="job-pos-title" style="display:none">相关职位</h3> -->
+<!-- 		        	<ul class="relation-pos tracking-ad" data-mod="popu_50" data-pid="so" > -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+
+
+                <!--学院课程[edu course] 的div  if (t != null && t != "" && t != "course") {-->
+               	
+	                <div id="edu_so_reco">
+	                    <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script>
+	                    <script type="text/javascript">
+	                   // if (show_course) {
+	                    	csdn.position.showEdu({
+	                            sourceType: "so",
+	                            searchType: "detail",
+	                            searchKey: "python",
+	                            username: getCookie('UserName'),
+	                            recordcount: "4",
+	                            containerId: "edu_so_reco"  //容器DIV的id。
+	                        });
+	                   // }
+	                        
+	                    </script>
+	                </div>
+	               
+
+
+				
+		        <div class="rightadv">
+		        	<!--AdForward Begin:-->
+					<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|pip&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+					<!--AdForward End-->
+		        </div>
+		        
+		        
+		        
+		        
+<!-- 		        <div class="common-box"> -->
+<!-- 		        	<h3>相关外包项目</h3> -->
+<!-- 		        	<ul class="relation-project"> -->
+<!-- 		            <li><a href="#">一个好玩的录屏mac项目</a></li> -->
+<!-- 		            <li><a href="#">win32项目移植到Android</a></li> -->
+<!-- 		            <li><a href="#">从svn上检出为的web项目，检出后不能发布到...</a></li> -->
+<!-- 		            <li><a href="#">dwz框架项目 中调用uploadify方法上传图片</a></li> -->
+<!-- 		            <li><a href="#">GitHub上最热门的开源项目</a></li>            -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+		    
+		    
+		    
+		  </div>
+		</div>
+		
+		<ul class="search-suggest2" id="search-suggest2"></ul>
+		<ul class="search-suggest2" id="search-suggest3"></ul>
+
+		<div id="csdn_pub_footer" class="margin_foot_top" style="padding-top:20px; padding-bottom:20px;">
+			<script src="http://csdnimg.cn/pubfooter/js/publib_footer.js"></script>
+		</div>
+		<script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>
+	</body>
+	
+</html>

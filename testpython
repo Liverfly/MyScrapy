@@ -1,0 +1,919 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CSDN搜索</title>
+		<link href="http://csdnimg.cn/public/common/libs/bootstrap/css/bootstrap.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/themes/default/css/common.css" rel="stylesheet" >
+		<link href="http://csdnimg.cn/public/static/css/pagination.css" rel="stylesheet">
+		<link href="http://c.csdnimg.cn/public/common/toolbar/css/index.css" rel="stylesheet" >
+		<link href="/so/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	    <link href="/so/css/bootstrap-responsive.css" rel="stylesheet">
+	    <link href="http://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+<!-- 	    自动补全 -->
+<!-- 	    <link type="text/css" rel="stylesheet" href="http://fed.csdn.net/static/css/main.css"> -->
+
+    	<link type="text/css" href="/so/css/main.css?1314" rel="stylesheet">
+    	
+<!--     	<script src="http://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script> -->
+		<script type="text/javascript" src="/so/js/jquery.js"></script>
+		<script type="text/javascript" src="/so/js/bootstrap.min.js"></script>
+		<script src="/so/js/jsonp.js" type="text/javascript"></script>
+		<script src="/so/js/ser_person.js" type="text/javascript"></script>
+
+
+		
+		
+		<script type="text/javascript">
+// 		$( function () {			
+// 			csdn.AutoSearch.run({
+// 				search: ".search-text2",
+// 				onSelect: function(data) {
+// 					alert(data.value);
+// 				}
+// 			})	
+// 		} );
+
+
+			function GetQueryString(name) {
+			   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+			   var r = window.location.search.substr(1).match(reg);
+			   if (r!=null) return unescape(r[2]); return null;
+			}
+			//var show_course = false;
+			
+			$(document).ready(function(){
+			    $("ul li").click(function(){
+			    	
+			    	var ili = $(".search-type")[0].children.length;
+					for (var i = 0; i < ili; i++) {
+						$(".search-type")[0].children[i].style.color="#000000";
+					}
+					
+			    	if (this.innerHTML == "资讯") {
+			    		$("#tt")[0].value = "news";
+			    		$("#tb")[0].value = "news";
+			    		
+			    		$(".search-type")[0].children[1].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="inline";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+ 			    		$("input[name='o1']").each(function() {
+ 				    		if($(this).val() == "null")
+ 				    		{
+ 				    			$(this).attr("checked",true)
+ 				    		}});
+// 			    		$("input[name='o1'][value='time'").attr("checked",true);
+			    		
+			    	} else if (this.innerHTML == "博文") {
+			    		$("#tt")[0].value = "blog";
+			    		$("#tb")[0].value = "blog";
+			    		
+			    		$(".search-type")[0].children[2].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "课程") {
+			    		$("#tt")[0].value = "course";
+			    		$("#tb")[0].value = "course";
+			    		
+			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "讨论") {
+			    		$("#tt")[0].value = "discuss";
+			    		$("#tb")[0].value = "discuss";
+			    		
+			    		$(".search-type")[0].children[3].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "代码") {
+			    		$("#tt")[0].value = "code";
+			    		$("#tb")[0].value = "code";
+			    		
+			    		$(".search-type")[0].children[4].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = $("input[name='o1']:checked").val();
+// 			    		$("#ob")[0].value = $("input[name='o1']:checked").val();
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="inline";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	} else if (this.innerHTML == "文档") {
+			    		$("#tt")[0].value = "doc";
+			    		$("#tb")[0].value = "doc";
+			    		
+			    		$(".search-type")[0].children[5].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = $("input[name='o3']:checked").val();
+			    		$("#sb")[0].value = $("input[name='o3']:checked").val();
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="inline";
+// 			    		$("#o_ask")[0].style.display="none";
+// 			    	} else if (this.innerHTML == "问答") {
+// 			    		$("#tt")[0].value = "ask_topic";
+// 			    		$("#tb")[0].value = "ask_topic";
+			    		
+// 			    		$(".search-type")[0].children[6].style.color="#990000";
+			    		
+// 			    		$("#ot")[0].value = "";
+// 			    		$("#ob")[0].value = "";
+// 			    		$("#st")[0].value = $("input[name='o4']:checked").val();
+// 			    		$("#sb")[0].value = $("input[name='o4']:checked").val();
+			    		
+// 			    		$("#o_news")[0].style.display="none";
+// 			    		$("#o_disscus_code")[0].style.display="none";
+// 			    		$("#o_doc")[0].style.display="none";
+// // 			    		$("#o_ask")[0].style.display="inline";
+			    		
+			    	} else {
+			    		$("#tt")[0].value = "";
+			    		$("#tb")[0].value = "";
+			    		
+			    		$(".search-type")[0].children[0].style.color="#990000";
+			    		
+			    		$("#ot")[0].value = "";
+			    		$("#ob")[0].value = "";
+			    		$("#st")[0].value = "";
+			    		$("#sb")[0].value = "";
+			    		
+			    		$("#o_news")[0].style.display="none";
+			    		$("#o_disscus_code")[0].style.display="none";
+			    		$("#o_doc")[0].style.display="none";
+// 			    		$("#o_ask")[0].style.display="none";
+			    	}
+			    	document.search_form_1.submit();
+			    });
+			});
+			function changeOrder(value) {
+				$("#ot")[0].value = value;
+	    		$("#ob")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+			function changeDocOrder(value) {
+				$("#st")[0].value = value;
+	    		$("#sb")[0].value = value;
+	    		
+	    		document.search_form_1.submit();
+			}
+// 			function changeAskOrder(value) {
+// 				$("#st")[0].value = value;
+// 	    		$("#sb")[0].value = value;
+	    		
+// 	    		document.search_form_1.submit();
+// 			}
+			
+			
+		</script>
+		
+		<script language="JavaScript" type="text/JavaScript">
+		$(document).ready(function(){
+				var ili = $(".search-type")[0].children.length;
+				for (var i = 0; i < ili; i++) {
+					$(".search-type")[0].children[i].style.color="#000000";
+				}
+				var t = GetQueryString("t");
+				
+				if (t == "news") {
+					$(".search-type")[0].children[1].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="inline";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+			    	$("input[name='o1']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "blog") {
+					$(".search-type")[0].children[2].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "course") {
+					$(".search-type")[0].children[6].style.color="#990000";
+					
+		    		$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+				} else if (t == "discuss") {
+					$(".search-type")[0].children[3].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="inline";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "code") {
+					$(".search-type")[0].children[4].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o2']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+				} else if (t == "doc") {
+					$(".search-type")[0].children[5].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="inline";
+// 		    		$("#o_ask")[0].style.display="none";
+
+		    		$("input[name='o3']").each(function() {
+			    		if($(this).val() == "null")
+			    		{
+			    			$(this).attr("checked",true)
+			    		}});
+// 				} else if (t == "ask_topic") {
+// 					$(".search-type")[0].children[6].style.color="#990000";
+					
+// 					$("#o_news")[0].style.display="none";
+// 		    		$("#o_disscus_code")[0].style.display="none";
+// 		    		$("#o_doc")[0].style.display="none";
+// 		    		$("#o_ask")[0].style.display="inline";
+// 		    		$("input[name='o3']").each(function() {
+
+// 			    		{
+// 			    			$(this).attr("checked",true)
+// 			    		}});
+				} else {
+					$(".search-type")[0].children[0].style.color="#990000";
+					
+					$("#o_news")[0].style.display="none";
+		    		$("#o_disscus_code")[0].style.display="none";
+		    		$("#o_doc")[0].style.display="none";
+		    		//$("#o_ask")[0].style.display="none";
+				}
+				
+// 				function soso( val ) {
+
+// 		    		document.search_form_1.submit();
+// 				}
+				
+// 				$( '.search-btn2' ).bind( 'click', function () {
+// 					var $this = $( this );
+// 					var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 					var val = $form.serialize();
+					
+// 					console.log( val );
+// 					//soso( val );
+// 				} );
+				
+// 				$( '.search-text2' ).bind( 'keydown', function ( et ) {
+// 					var evt = et || window.event;
+					
+// 					if ( evt.keyCode == 13 )
+// 					{
+// 						var $this = $( this );
+// 						var $form = $this.parents( '.search-from2' ).find( 'form' );
+// 						var val = $form.serialize();
+// 						console.log( val );
+// 						//soso( val );
+// 					}
+// 				} );				
+			});
+// 			windows.onload = onload_handler;
+		</script>
+		<script type="text/javascript">
+		domReady(function(){
+
+		    var oT = getByClass(document,'search-text2')[0];
+		    var oT2 = getByClass(document,'search-text2')[1];    
+		    var oFormcon = getByClass(document,'search-from2');
+		    var oForm1 = oFormcon[0].children[0];
+		    var oForm2 = oFormcon[1].children[0];
+
+		    var pos1 = getPos(oForm1).top;
+		    var pos2 = getPos(oForm2).top;    
+
+		    var oUl = document.getElementById('search-suggest2');
+		    var oUl2 = document.getElementById('search-suggest3');
+		    oUl.style.top = pos1 + 32 + 'px';
+		    oUl2.style.top = pos2 + 32 + 'px';
+		    
+		    var url=document.domain;
+		    if (window.location.port != 80) {
+		    	url += ":" +window.location.port;
+		    }
+		    var URL = window.location.protocol +'//'+url+'/so/search/so/autocomplete.do';
+		    var aLi=oUl.children;
+		    var aLi2=oUl2.children;
+
+		    window.iNow=-1;
+		    window.iNow2=-1;
+		    oT.focus();    
+		    var oldValue='';
+		    var oldValue2='';
+
+		    oT.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl.style.display='none';
+		            }
+		            else
+		            {
+		                oUl.style.display='block';
+		                var data = eval('('+json.suggestions+')');  
+		            }
+		            oUl.innerHTML='';
+		            for(var i=0; i<data.length; i++)
+		            {
+		                var oLi=document.createElement('li');
+		                oLi.innerHTML=data[i].key;
+		                oUl.appendChild(oLi);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi[i].index=i;
+		            aLi[i].onmouseover=function(){
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            this.style.background='#ccc';            
+		            
+		            iNow=this.index;
+		           
+		            }
+		            
+		            aLi[i].onclick=function()
+		            {
+		            	 oT.value=aLi[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue=oT.value;
+		    }
+
+		    oT.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow++;
+		            
+		            if(iNow==aLi.length){
+		                iNow=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;
+		            }else{
+		                oT.value=oldValue;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow--;            
+		            if(iNow==-2){
+		                iNow=aLi.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi.length; i++){
+		                aLi[i].style.background='';
+		            }
+		            if(iNow!=-1){
+		                aLi[iNow].style.background='#ccc';
+		                oT.value=aLi[iNow].innerHTML;   
+		            }else{
+		                oT.value=oldValue;  
+		            }
+		            return false;   
+		        }   
+		    }
+
+
+		    oT2.onkeyup=function(ev)
+		    {
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40 || oEvent.keyCode==38){
+		            return; 
+		        }
+
+		        if(oEvent.keyCode==13){
+		             this.parentNode.parentNode.submit();  
+		        }            
+		       
+		        jsonp(URL, {q: oT2.value}, function (json){            
+		            
+		            if(json.suggestions.length==0)
+		            {
+		                oUl2.style.display='none';
+		            }
+		            else
+		            {
+		                oUl2.style.display='block';
+		                var data2 = eval('('+json.suggestions+')');  
+		            }
+		            oUl2.innerHTML='';
+		            for(var i=0; i<data2.length; i++)
+		            {
+		                var oLi2=document.createElement('li');
+		                oLi2.innerHTML=data2[i].key;
+		                oUl2.appendChild(oLi2);
+		            }
+
+		            for(var i=0; i<aLi.length; i++){
+		            aLi2[i].index=i;
+		            aLi2[i].onmouseover=function(){
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            this.style.background='#ccc';
+		            iNow2=this.index;
+		            
+		            }
+		            
+		            aLi2[i].onclick=function()
+		            {
+		            	oT2.value=aLi2[this.index].innerHTML;
+		            }
+		            
+		            }
+
+		        }, 'callback'); 
+
+		                
+		        oldValue2=oT2.value;
+		    }
+
+		    oT2.onkeydown=function(ev){
+
+		        var oEvent=ev || event;
+		        if(oEvent.keyCode==40){
+		            iNow2++;
+		            
+		            if(iNow2==aLi2.length){
+		                iNow2=-1;    
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;
+		            }else{
+		                oT2.value=oldValue2;  
+		            }           
+		        }
+		        
+		        if(oEvent.keyCode==38){
+		            iNow2--;            
+		            if(iNow2==-2){
+		                iNow2=aLi2.length-1;  
+		            }
+		            
+		            for(var i=0; i<aLi2.length; i++){
+		                aLi2[i].style.background='';
+		            }
+		            if(iNow2!=-1){
+		                aLi2[iNow2].style.background='#ccc';
+		                oT2.value=aLi2[iNow2].innerHTML;   
+		            }else{
+		                oT2.value=oldValue2;  
+		            }
+		            return false;   
+		        }   
+		    }
+		    oT.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    oT2.onclick=function(ev){
+				var oEvent=ev || event;		
+				oEvent.cancelBubble=true;
+			}
+		    
+		    document.onclick = function()
+		    {
+		        oUl.style.display='none';
+		        oUl2.style.display='none';
+		    }
+		
+		    
+// 		    var oSourcon = document.getElementById('source-list');
+// 			var oSource = oSourcon.children[1];
+// 			var sourceURL = 'http://192.168.5.91:8080/so/search/so/getQualityArticle.do';	
+// 			var keyword = GetRequest().q;
+// 			jsonp(sourceURL, {q: keyword}, function (json){
+		            
+// 					var data = eval('('+json.suggestions+')');
+		            
+// 					if(data.length==0)
+// 		            {
+// 		                oSourcon.style.display='none';
+// 		            }
+// 		            else
+// 		            {
+// 		               oSourcon.style.display='block';
+// 		                var data = eval('('+json.suggestions+')');				
+// 		            }
+					
+// 					for(var i=0; i<6; i++)
+// 		            {
+// 		                var oDl=document.createElement('dl');
+// 						var oDt=document.createElement('dt');
+// 						var oDd=document.createElement('dd');
+// 						var oImg=document.createElement('img');
+// 						var oA=document.createElement('a');
+// 						var oA2=document.createElement('a');
+						
+// 						oImg.src = data[i].pic;
+// 						oImg.width = 73;
+// 						oImg.height = 70;
+// 						oA.href = data[i].url;
+// 						oA.title = data[i].title;
+						
+// 						oA2.href = data[i].url;
+// 						oA2.title = data[i].title;
+// 						oA2.innerHTML = data[i].title;
+						
+// 						oA.appendChild(oImg);
+// 						oDt.appendChild(oA);
+// 						oDd.appendChild(oA2);
+// 						oDl.appendChild(oDt);
+// 						oDl.appendChild(oDd);
+// 						oSource.appendChild(oDl);
+// 		            }	
+					
+// 			}, 'callback');
+		});
+		
+		</script>
+
+	</head>
+	<body>
+
+		<script id="toolbar-tpl-scriptId"  prod="so" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" domain="http://so.csdn.net/so/" type="text/javascript"></script>
+		<div class="topadv">
+			<!--AdForward Begin:-->
+			<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|banner1&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+			<!--AdForward End-->
+		</div>
+		<div class="main-container">
+			<div class="con-l">
+		    <ul class="search-type">
+		    	<li>全部</li>    
+		        <li>资讯</li>   
+		        <li>博文</li>   
+		        <li>讨论</li>    
+		        <li>代码</li>    
+		        <li>文档</li>
+                <li>课程</li>
+<!-- 		        <li>问答</li> -->
+		    </ul>
+		    <div class="search-from2" style="position:relative">
+		    	<form id="search_form_1" name="search_form_1" >
+		        	<div class="search-text-con2">
+		        		<input type="text"  path="q" class="search-text2" id="q1" name="q" value="python"  autocomplete="off"/>
+		        		<input type="hidden" id="tt" name="t" value="blog" />
+		        		<input type="hidden" id="ot" name="o" value="null" />
+		        		<input type="hidden" id="st" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		        
+		        <div class="search-addition-con" >
+		        	<div id="o_news" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o1" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序</span>
+	 	             	<em><input type="radio" name="o1" value="time" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按时间排序 </span>
+			    	</div>
+			    	<div id="o_disscus_code" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o2" value="simi" onchange="changeOrder(this.value);" onClick="this.blur();"  checked></em><span>按相关度排序 </span>
+	 	             	<em><input type="radio" name="o2" value="reply" onchange="changeOrder(this.value);" onClick="this.blur();" ></em><span>按回复数排序</span>
+			    	</div>
+			    	<div id="o_doc" style="display:none" class="search-addition">
+			    		<em><input type="radio" name="o3" value="all" onchange="changeDocOrder(this.value);" onClick="this.blur();"  checked></em><span>全部</span>
+	 	             	<em><input type="radio" name="o3" value="doc" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>DOC</span>
+	 	             	<em><input type="radio" name="o3" value="ppt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PPT</span>
+	 	             	<em><input type="radio" name="o3" value="txt" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>TXT</span>
+	 	             	<em><input type="radio" name="o3" value="pdf" onchange="changeDocOrder(this.value);" onClick="this.blur();" ></em><span>PDF</span>
+			    	</div>
+<!-- 			    	<div id="o_ask" style="display:none" class="search-addition"> -->
+<!-- 			    		<em><input type="radio" name="o4" value="1" onchange="changeAskOrder(this.value);" onClick="this.blur();"  checked></em><span>已解答</span> -->
+<!-- 	 	             	<em><input type="radio" name="o4" value="0" onchange="changeAskOrder(this.value);" onClick="this.blur();" ></em><span>未解答</span> -->
+<!-- 			    	</div> -->
+		        </div>
+		    </div>
+		    
+		    
+		    <div class="add-tag-con"  style="display:none">
+		    	
+		    	    
+		    </div>
+		    
+		    <div class="search-list-con"  style="display:none">
+		        
+		         
+		    </div>
+		    
+		    <div class="csdn-pagination hide-set"  style="display:none">
+		        <span class="page-nav">
+			        <span class="text">共0条结果</span>
+			        
+			        
+			        	<a href="?p=7&q=python&t=blog&domain=&o=null&s=null&u=null" 
+				         class="btn btn-xs btn-default btn-prev">&lt;
+				        </a>
+			        
+			        
+			        
+			        
+				    
+				    
+			        
+		        </span>
+		        <span class="page-go">
+			        <span class="text">到第</span>
+			        <input type="text" style="width:30px" id="p1" value="8"/>
+			        <span class="text">页</span>
+
+			        
+			        <button type="button"  class="btn btn-xs btn-default btn-go"  onclick="location.href='?p=' + $('#p1').val() + '&q=python&t=blog&o=null&s=null&u=null'">GO</button>
+		        </span>
+			</div>
+		    
+		    <div >
+		    	<p class="pointout">抱歉，没有找到相关结果。</p>
+		    </div>
+		    
+	    	<div class="relation-search tracking-ad" data-mod="popu_49" >
+			    <p><em>python</em>的相关搜索</p>
+			    <ul>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python-tesseract&t=blog' class="rel-search" title="python-tesseract" >python-tesseract</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python xml&t=blog' class="rel-search" title="python xml" >python xml</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 截图&t=blog' class="rel-search" title="python 截图" >python 截图</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python &lt <&t=blog' class="rel-search" title="python &lt <" >python &lt <</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python pexpect&t=blog' class="rel-search" title="python pexpect" >python pexpect</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 调用DLL返回值&t=blog' class="rel-search" title="python 调用DLL返回值" >python 调用DLL...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=爬虫 Python&t=blog' class="rel-search" title="爬虫 Python" >爬虫 Python</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python获取父标签&t=blog' class="rel-search" title="python获取父标签" >python获取父...</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python 正则&t=blog' class="rel-search" title="python 正则" >python 正则</a>
+
+			    		</li>
+			    	
+			    		<li>
+
+
+							<a href='/so/search/s.do?q=python的random模块&t=blog' class="rel-search" title="python的random模块" >python的random...</a>
+
+			    		</li>
+			    	
+			    </ul> 
+    			<script type="text/javascript">
+					$( function () {
+						var $href = $( '.rel-search' );
+						
+						$href.each( function ( i, item ) {
+							var href = item.getAttribute( 'href', 2 );
+							var reg = /q=(.*?)&/g;
+
+							item.href = href.replace( reg, function ( all, sub ) {
+								return 'q=' + encodeURIComponent( sub ) +"&";
+							} );
+						} );
+						//console.log( href );
+					} );
+				</script>   
+		    </div>
+		    <div class="search-from2"   style="display:none">
+		    	<form>
+		        	<div class="search-text-con2">
+		        		<input type="text" path="q" class="search-text2" name="q" value="python"  autocomplete="off" />
+		        		<input type="hidden" id="tb" name="t" value="blog" />
+		        		<input type="hidden" id="ob" name="o" value="null" />
+		        		<input type="hidden" id="sb" name="s" value="null" />
+		        	</div>
+		        	<div class="search-btn-con2">
+		        		<input type="Submit" value="搜一搜" class="search-btn2">
+		        	</div>        
+		        </form>
+		    </div>
+		        
+		    </div>
+			<div class="con-r">
+		    	<div style="height:96px;"> </div>
+<!-- 		    	<div class="adv"> -->
+
+<!-- 		    	</div> -->
+		        
+<!-- 		    	<div class="common-box"  style="margin-top:116px;"> -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+
+
+
+<!-- 		            </div> -->
+<!-- 		        </div> -->
+		        
+<!-- 		        <div class="common-box"  id="source-list" > -->
+<!-- 		        	<h3>精品文档</h3> -->
+<!-- 		        	<div class="source-list tracking-ad" data-mod="popu_51" data-pid="so" > -->
+		            
+<!-- 		            </div> -->
+<!-- 				</div> -->
+
+		        
+<!-- 		        <div class="common-box" id="rel_job" style="display:none"> -->
+<!-- 		        	<h3 id="job-pos-title" style="display:none">相关职位</h3> -->
+<!-- 		        	<ul class="relation-pos tracking-ad" data-mod="popu_50" data-pid="so" > -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+
+
+                <!--学院课程[edu course] 的div  if (t != null && t != "" && t != "course") {-->
+               	
+	                <div id="edu_so_reco">
+	                    <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script>
+	                    <script type="text/javascript">
+	                   // if (show_course) {
+	                    	csdn.position.showEdu({
+	                            sourceType: "so",
+	                            searchType: "detail",
+	                            searchKey: "python",
+	                            username: getCookie('UserName'),
+	                            recordcount: "4",
+	                            containerId: "edu_so_reco"  //容器DIV的id。
+	                        });
+	                   // }
+	                        
+	                    </script>
+	                </div>
+	               
+
+
+				
+		        <div class="rightadv">
+		        	<!--AdForward Begin:-->
+					<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|csdn_search|pip&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+					<!--AdForward End-->
+		        </div>
+		        
+		        
+		        
+		        
+<!-- 		        <div class="common-box"> -->
+<!-- 		        	<h3>相关外包项目</h3> -->
+<!-- 		        	<ul class="relation-project"> -->
+<!-- 		            <li><a href="#">一个好玩的录屏mac项目</a></li> -->
+<!-- 		            <li><a href="#">win32项目移植到Android</a></li> -->
+<!-- 		            <li><a href="#">从svn上检出为的web项目，检出后不能发布到...</a></li> -->
+<!-- 		            <li><a href="#">dwz框架项目 中调用uploadify方法上传图片</a></li> -->
+<!-- 		            <li><a href="#">GitHub上最热门的开源项目</a></li>            -->
+<!-- 		            </ul> -->
+<!-- 		        </div> -->
+		    
+		    
+		    
+		  </div>
+		</div>
+		
+		<ul class="search-suggest2" id="search-suggest2"></ul>
+		<ul class="search-suggest2" id="search-suggest3"></ul>
+
+		<div id="csdn_pub_footer" class="margin_foot_top" style="padding-top:20px; padding-bottom:20px;">
+			<script src="http://csdnimg.cn/pubfooter/js/publib_footer.js"></script>
+		</div>
+		<script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>
+	</body>
+	
+</html>
